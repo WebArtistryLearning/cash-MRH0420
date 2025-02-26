@@ -21,7 +21,7 @@ jobs:
         setup-command: ''
         command: python3 cash.py
         input: '5'
-        expected-output: '2'
+        expected-output: '1'
         comparison-method: exact
         timeout: 10
     - name: Checkpoint 2

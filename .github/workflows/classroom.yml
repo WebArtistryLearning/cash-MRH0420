@@ -1,0 +1,92 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Checkpoint 1
+      id: checkpoint-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 1
+        setup-command: ''
+        command: python3 cash.py
+        input: '5'
+        expected-output: '2'
+        comparison-method: exact
+        timeout: 10
+    - name: Checkpoint 2
+      id: checkpoint-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 2
+        setup-command: ''
+        command: python3 cash.py
+        input: '70'
+        expected-output: '4'
+        comparison-method: exact
+        timeout: 10
+    - name: Checkpoint 3
+      id: checkpoint-3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 3
+        setup-command: ''
+        command: python3 cash.py
+        input: '99'
+        expected-output: '9'
+        comparison-method: exact
+        timeout: 10
+    - name: Checkpoint 4
+      id: checkpoint-4
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 4
+        setup-command: ''
+        command: python3 cash.py
+        input: '41'
+        expected-output: '4'
+        comparison-method: exact
+        timeout: 10
+    - name: Checkpoint 5
+      id: checkpoint-5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 5
+        setup-command: ''
+        command: python3 cash.py
+        input: '87'
+        expected-output: '6'
+        comparison-method: exact
+        timeout: 10
+    - name: Checkpoint 7
+      id: checkpoint-7
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Checkpoint 7
+        setup-command: ''
+        command: python3 cash.py
+        input: '0'
+        expected-output: '0'
+        comparison-method: exact
+        timeout: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CHECKPOINT-1_RESULTS: "${{steps.checkpoint-1.outputs.result}}"
+        CHECKPOINT-2_RESULTS: "${{steps.checkpoint-2.outputs.result}}"
+        CHECKPOINT-3_RESULTS: "${{steps.checkpoint-3.outputs.result}}"
+        CHECKPOINT-4_RESULTS: "${{steps.checkpoint-4.outputs.result}}"
+        CHECKPOINT-5_RESULTS: "${{steps.checkpoint-5.outputs.result}}"
+        CHECKPOINT-7_RESULTS: "${{steps.checkpoint-7.outputs.result}}"
+      with:
+        runners: checkpoint-1,checkpoint-2,checkpoint-3,checkpoint-4,checkpoint-5,checkpoint-7
